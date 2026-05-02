@@ -2,7 +2,7 @@
 title: 'Setting up OBS for webcasting'
 draft: true
 description: "ARCHIVED 2026-04-27: OBS Studio (screen-recording for webcasting) is off-construct relative to the Workflow Construct described in post 52. The post is retained as a stub for historical reference."
-image: "img/obs.png"
+image: "../../img/obs.png"
 date: today
 document-type: "blog"
 execute:
