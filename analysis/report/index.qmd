@@ -11,7 +11,7 @@ execute:
 ---
 
 ::: column-margin
-![](img/obs.png)
+![](../../img/obs.png)
 :::
 
 # Introduction
