@@ -1,6 +1,5 @@
 ---
 title: 'Setting up OBS for Live R Coding Screencasts'
-subtitle: 'An open source pipeline for recording reproducible R analyses and publishing them to YouTube'
 author: "Ronald 'Ryy' G. Thomas"
 date: '2026-05-02'
 categories: [setup, obs, youtube, screencast, r, reproducibility]
@@ -82,7 +81,7 @@ CONTACT & METADATA
 HERO IMAGE
 ============================================================================ -->
 
-![A live OBS Studio session ready to capture an R analysis.](media/images/hero.jpg){.img-fluid width=80%}
+![A live OBS Studio session ready to capture an R analysis.](media/images/hero.jpg){.img-fluid width=80% fig-align="center"}
 
 *A short screencast captures the small decisions a written report leaves out.*
 
