@@ -102,7 +102,7 @@ recording conventions to glue them together. The pipeline costs nothing,
 runs on macOS, Linux, and Windows, and produces files that any future
 viewer can play without an account.
 
-This post walks through that pipeline end to end. It covers OBS
+We walk through that pipeline end to end. The post covers OBS
 installation, scene and audio configuration suitable for an R coding
 session, a publication checklist for YouTube, and a worked five-minute
 example using the Palmer Penguins dataset that mirrors the analytical
@@ -159,7 +159,7 @@ either directly by the AV team or via a downstream tool that wraps it.
 - **Microphone.** Any USB or 3.5mm microphone. Built-in laptop
   microphones produce listenable but distinctly amateur audio.
 - **Prior knowledge.** Basic shell command experience and familiarity
-  with the R session you intend to record.
+  with the R session one intends to record.
 - **Disk space.** Roughly 50 megabytes per minute of recorded video at
   the recommended quality settings.
 
@@ -347,10 +347,10 @@ the symptom and the fix.
    relaunch OBS. The permission request only appears the first time;
    if it was dismissed, it must be granted manually.
 2. **Audio is silent in the recording but the meter shows activity.**
-   Symptom: the OBS audio meter moves while you speak, but playback
+   Symptom: the OBS audio meter moves during speech, but playback
    is silent. Fix: check that the microphone source is not muted in
-   the *Audio Mixer* panel (the speaker icon is hidden until you
-   hover) and confirm the recording's output channel mix in
+   the *Audio Mixer* panel (the speaker icon is hidden until hovered)
+   and confirm the recording's output channel mix in
    *Settings > Audio > Advanced*.
 3. **The recording stutters when the editor is in focus.** Symptom:
    intermittent dropped frames during typing. Fix: switch from
@@ -433,7 +433,7 @@ configuration directory with default settings on first launch.
 - YouTube's MP4 preference is documented but not enforced clearly in
   upload error messages.
 - Default OBS hotkeys are intentionally unset to avoid clashes; this
-  feels broken until you realise it.
+  feels broken until one realises it.
 
 # Limitations
 
@@ -478,14 +478,17 @@ Penguins analysis above, published both as a written post and as an
 embedded five-minute video, so the comparison between the two media
 can be made directly.
 
-## Main Takeaways
-
-- The open source pipeline (OBS + ffmpeg + YouTube) is sufficient for
-  publication-quality screencasts of R analyses.
-- Three scenes, two audio sources, and a 30-second test are the
-  minimum viable configuration; everything else is refinement.
-- Audio quality and font size are the two settings most often
-  underestimated by first-time recorders.
+In conclusion, three points merit emphasis. First,
+the open source pipeline (OBS + ffmpeg + YouTube) is
+sufficient for publication-quality screencasts of R
+analyses, with no proprietary tooling required.
+Second, three scenes, two audio sources, and a
+30-second test constitute the minimum viable
+configuration; everything beyond that is refinement.
+Third, audio quality and font size are the two
+settings most often underestimated by first-time
+recorders, and correcting them before recording saves
+significant post-production effort.
 
 # See Also
 
