@@ -6,7 +6,7 @@ categories: [setup, obs, youtube, screencast, r, reproducibility]
 description: 'A reproducible workflow for producing short, focused screencasts of R data analysis using OBS Studio and YouTube. Includes installation, scene configuration, recording, editing, and a worked five-minute example based on the Palmer Penguins dataset.'
 image: 'media/images/hero.jpg'
 document-type: 'blog'
-draft: true
+draft: false
 execute:
   echo: true
   warning: false
