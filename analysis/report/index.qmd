@@ -4,7 +4,7 @@ author: "Ronald 'Ryy' G. Thomas"
 date: '2026-05-02'
 categories: [setup, obs, youtube, screencast, r, reproducibility]
 description: 'A reproducible workflow for producing short, focused screencasts of R data analysis using OBS Studio and YouTube. Includes installation, scene configuration, recording, editing, and a worked five-minute example based on the Palmer Penguins dataset.'
-image: 'media/images/hero.jpg'
+image: 'media/images/hero.png'
 document-type: 'blog'
 draft: false
 execute:
@@ -32,7 +32,7 @@ YAML FRONT MATTER (lines 1-20)
   [x] date            — 2026-05-02
   [x] categories      — setup, obs, youtube, screencast, r, reproducibility
   [x] description     — 1-2 sentences for blog listing card
-  [x] image           — media/images/hero.jpg (Gemini-generated, 1600x893)
+  [x] image           — media/images/hero.png (Gemini-generated, 1600x893)
   [x] draft: false    — flip when imagery is in place
 
 NARRATIVE INPUTS
@@ -66,7 +66,7 @@ VERSION MATRIX (Reproducibility section)
   [x] Date of last verification  — 2026-05-02
 
 IMAGES (4 total: hero + 3 ambiance, all in media/images/)
-  [x] Hero image (80% width)        — media/images/hero.jpg in place
+  [x] Hero image (80% width)        — media/images/hero.png in place
   [ ] Ambiance image 1 (100% width) — after Objectives (workspace shot)
   [ ] Ambiance image 2 (100% width) — after Configuration (terminal/editor)
   [ ] Ambiance image 3 (100% width) — before Lessons Learnt (workflow scene)
@@ -83,7 +83,7 @@ CONTACT & METADATA
 HERO IMAGE
 ============================================================================ -->
 
-![A live OBS Studio session ready to capture an R analysis.](media/images/hero.jpg){.img-fluid width=80% fig-align="center"}
+![A live OBS Studio session ready to capture an R analysis.](media/images/hero.png){.img-fluid width=80% fig-align="center"}
 
 *A short screencast captures the small decisions a written report leaves out.*
 
