@@ -1,11 +1,11 @@
 ---
-title: 'Setting up OBS for Live R Coding Screencasts'
+title: "Setting up OBS for Live R Coding Screencasts"
 author: "Ronald G. Thomas"
-date: '2026-05-02'
+date: "2026-05-02"
 categories: [setup, obs, youtube, screencast, r, reproducibility]
-description: 'A reproducible workflow for producing short, focused screencasts of R data analysis using OBS Studio and YouTube. Includes installation, scene configuration, recording, editing, and a worked five-minute example based on the Palmer Penguins dataset.'
-image: 'media/images/hero.png'
-document-type: 'blog'
+description: "A reproducible workflow for producing short, focused screencasts of R data analysis using OBS Studio and YouTube. Includes installation, scene configuration, recording, editing, and a worked five-minute example based on the Palmer Penguins dataset."
+image: "media/images/hero.png"
+document-type: "blog"
 draft: true
 execute:
   echo: true
