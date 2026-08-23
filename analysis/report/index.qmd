@@ -104,7 +104,7 @@ We walk through that pipeline end to end. The post covers OBS
 installation, scene and audio configuration suitable for an R coding
 session, a publication checklist for YouTube, and a worked five-minute
 example using the Palmer Penguins dataset that mirrors the analytical
-structure of [post 14](/posts/14-penguins1zzcollab/).
+structure of [Palmer Penguins Part 1](../pp-eda/).
 
 ## Motivations
 
@@ -287,7 +287,7 @@ A flipper length increase of one millimetre is associated with roughly
 a 50 gram increase in body mass. R-squared is approximately 0.76,
 which is striking for a single predictor and provides a natural
 cliffhanger for a follow-up post that introduces species as a covariate
-(see [Palmer Penguins Part 1](/posts/14-penguins1zzcollab/)).
+(see [Palmer Penguins Part 1](../pp-eda/)).
 
 The screencast closes with a one-sentence summary and a verbal pointer
 to the written post that contains the full analysis.
@@ -492,7 +492,7 @@ significant post-production effort.
 
 - [OBS Studio documentation](https://obsproject.com/wiki/)
 - [YouTube Creator Academy](https://creatoracademy.youtube.com/)
-- [Palmer Penguins Part 1](/posts/14-penguins1zzcollab/) — the worked
+- [Palmer Penguins Part 1](../pp-eda/) — the worked
   analysis used in this post's screencast example.
 - [ffmpeg documentation](https://ffmpeg.org/documentation.html) for
   trimming and remuxing recordings.
@@ -528,7 +528,7 @@ I would enjoy hearing from you if:
 ---
 
 *Rendered on 2026-05-02 at 10:30 PDT.*<br>
-*Source: ~/prj/qblog/posts/27-setupobs/setupobs/analysis/report/index.qmd*
+*Source: ~/prj/rgtlab/posts/pub-obs-r-screencasts/index.qmd*
 
 <!-- ============================================================================
 PRE-PUBLISH QA CHECKLIST: verify each item BEFORE setting draft: false
