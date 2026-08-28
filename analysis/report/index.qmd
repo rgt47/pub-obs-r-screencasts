@@ -1,10 +1,10 @@
 ---
-title: "Setting up OBS for Live R Coding Screencasts"
+title: "Producing R Coding Videos: OBS Screencasts and Narrated Slide Decks"
 author: "Ronald G. Thomas"
 date: "2026-05-02"
-categories: [setup, obs, youtube, screencast, r, reproducibility]
-description: "A reproducible workflow for producing short, focused screencasts of R data analysis using OBS Studio and YouTube. Includes installation, scene configuration, recording, editing, and a worked five-minute example based on the Palmer Penguins dataset."
-image: "media/images/hero.png"
+categories: [setup, obs, youtube, screencast, video-production, ffmpeg, whisper, r, reproducibility]
+description: "A reproducible, hands-on pipeline for producing R data analysis videos two ways: live OBS Studio screencasts and edited, narrated slide decks assembled with sox, ffmpeg, and Whisper. Includes installation, a worked five-minute Palmer Penguins example for each method, and a full YouTube publishing walkthrough."
+image: "media/images/hero-generated.png"
 document-type: "blog"
 draft: true
 execute:
@@ -23,46 +23,61 @@ FIRST, then paste your answers into the matching `[bracketed]` slots. Do not
 publish until every box is ticked.
 
 YAML FRONT MATTER (lines 1-20)
-  [x] title           — 'Setting up OBS for Live R Coding Screencasts'
+  [x] title           — 'Producing R Coding Videos: OBS Screencasts and
+        Narrated Slide Decks' (retitled to cover both methods)
   [x] subtitle        — one-line elaboration of what the post sets up
   [x] date            — 2026-05-02
-  [x] categories      — setup, obs, youtube, screencast, r, reproducibility
+  [x] categories      — setup, obs, youtube, screencast, video-production,
+        ffmpeg, whisper, r, reproducibility
   [x] description     — 1-2 sentences for blog listing card
-  [x] image           — media/images/hero.png (Gemini-generated, 1600x893)
-  [x] draft: false    — flip when imagery is in place
+  [x] image           — media/images/hero-generated.png (Gemini-generated,
+        2026-08-28, 1376x768; replaces the earlier hero.png/hero.jpg,
+        whose blank laptop screen did not match the caption)
+  [ ] draft: false    — flip when imagery is in place AND Method Two
+        (Steps 9-17) has been run end to end on a clean machine
 
 NARRATIVE INPUTS
   [x] Hook sentence   — until-moment for screencasting friction
   [x] Pain point      — the static-text limit of written tutorials
-  [x] Motivations     — exactly 4-5 bullets
-  [x] Objectives      — exactly 4 numbered, verifiable end states
+  [x] Motivations     — 5 bullets (added: not every analysis suits a live take)
+  [x] Objectives      — 5 numbered, verifiable end states (added: build and
+        publish the slide-deck version)
   [x] What is OBS?    — 1-sentence definition + 1 analogy + 1 concrete example
-  [x] Daily-workflow paragraph — how OBS fits the recording routine after setup
-  [x] Things to Watch Out For — 5-7 gotchas
-  [x] Lessons Learnt  — conceptual + technical + gotcha bullets
-  [x] Limitations     — 4-6 bullets (what OBS does NOT solve)
-  [x] Opportunities for Improvement — 5-6 numbered next-step extensions
+  [x] Method comparison — 'Two Ways to Produce an R Coding Video' section
+        plus the 'Comparing the Two Methods' table
+  [x] Things to Watch Out For — 10 gotchas (7 Method One, 3 Method Two)
+  [x] Lessons Learnt  — conceptual + technical + gotcha bullets, both methods
+  [x] Limitations     — 5 bullets covering both methods
+  [x] Opportunities for Improvement — 7 numbered next-step extensions
   [x] Wrapping Up     — 2-3 paragraph conclusion + 'Main takeaways'
-  [x] See Also        — 3-5 links
+  [x] See Also        — 6 links, including sox and Whisper
 
 CONFIGURATION DELIVERABLES
-  [x] Prerequisites list — OS, hardware, prior knowledge
-  [x] Installation block — exact bash commands
+  [x] Prerequisites list — OS, hardware, prior knowledge, Method Two toolchain
+  [x] Installation block — exact bash commands, both methods
   [ ] Complete config file(s) — OBS scene-collection JSON could live under
         analysis/configs/ in a future revision
-  [x] Verification commands — `obs --version` plus a 30-second test recording
+  [ ] Method Two build script — Steps 9-16 are documented as individual
+        commands; Opportunity #4 proposes bundling them into
+        `build_video.sh`, not yet written
+  [x] Verification commands — `obs --version`, `sox --version`,
+        `convert --version`, `whisper --help`, plus a 30-second test
+        recording
   [x] Optional keybinding/command reference table — recording hotkeys
   [x] Uninstall / rollback steps — how to remove OBS cleanly
   [ ] Optional appendices — RTMP server overrides, podcast-ready audio chain
 
 VERSION MATRIX (Reproducibility section)
   [x] OS + version tested        — macOS 26.4 (Tahoe), Ubuntu 24.04 LTS
-  [x] Tool version pinned        — OBS Studio 30.x, ffmpeg 7.x, Quarto 1.9
+  [x] Tool version pinned        — OBS Studio 30.x, ffmpeg 7.x, sox 14.4.x,
+        ImageMagick 7.x, openai-whisper 20231117, LibreOffice 24.x, Quarto 1.9
   [x] Dependency versions        — Homebrew 4.x; apt 2.x
-  [x] Date of last verification  — 2026-05-02
+  [ ] Date of last verification  — 2026-05-02 for Method One; Method Two's
+        commands are inspected from the pp-eda video guide, not yet run
+        end to end under this post's own toolchain versions
 
 IMAGES (4 total: hero + 3 ambiance, all in media/images/)
-  [x] Hero image (80% width)        — media/images/hero.png in place
+  [x] Hero image (80% width)        — media/images/hero-generated.png in place
   [ ] Ambiance image 1 (100% width) — after Objectives (workspace shot)
   [ ] Ambiance image 2 (100% width) — after Configuration (terminal/editor)
   [ ] Ambiance image 3 (100% width) — before Lessons Learnt (workflow scene)
@@ -79,7 +94,7 @@ CONTACT & METADATA
 HERO IMAGE
 ============================================================================ -->
 
-![A live OBS Studio session ready to capture an R analysis.](media/images/hero.png){.img-fluid width=80% fig-align="center"}
+![A recording desk set up for a live R screencast: microphone, ring light, and a laptop screen already showing the code editor.](media/images/hero-generated.png){.img-fluid width=80% fig-align="center"}
 
 *A short screencast captures the small decisions a written report leaves out.*
 
@@ -120,6 +135,11 @@ structure of [Palmer Penguins Part 1](../pp-eda/).
 - The R community has gravitated toward YouTube as the default home for
   asynchronous tutorials, but documentation of the recording workflow
   itself is scattered.
+- Not every analysis suits a live take. A polished, narrated slide deck
+  with edited audio communicates a finished result better than a
+  screencast, and a reproducible pipeline for building one belongs
+  alongside the live-capture workflow rather than in a separate,
+  undocumented pile of scripts.
 
 ## Objectives
 
@@ -132,8 +152,43 @@ structure of [Palmer Penguins Part 1](../pp-eda/).
    it to YouTube as an unlisted draft with appropriate metadata.
 4. Walk through a complete five-minute live R coding session based on the
    Palmer Penguins dataset, ready to record on a second take.
+5. Build the same Palmer Penguins result a second way, as an edited,
+   narrated slide deck assembled entirely from the command line with
+   `sox`, `ffmpeg`, and Whisper, and publish it to YouTube alongside the
+   live-capture version.
 
-![Workspace prepared for the first recording session.](media/images/obs.png){.img-fluid}
+## Two Ways to Produce an R Coding Video
+
+This post covers two production methods and a shared publishing step,
+not one method with variations. They solve different problems and are
+not interchangeable.
+
+**Method One: live capture with OBS Studio.** The analyst codes on
+camera in real time. The value is authenticity: viewers see hesitation,
+false starts, and the analyst's actual working process, which a script
+cannot fake. The cost is that mistakes are either kept (in the spirit of
+a live take) or force a full re-record, since there is no timeline to
+edit.
+
+**Method Two: a narrated slide deck assembled from a script.** The
+analyst writes a short script, renders the key plots and model output as
+static images, records narration for each slide separately, and
+assembles the result with command-line tools. The value is polish and
+reproducibility: a typo in the narration only requires re-recording one
+slide's audio, and the whole build can be scripted end to end. The cost
+is that it looks and feels like a produced video rather than a live
+session, which is a poor fit for teaching debugging or exploratory
+analysis.
+
+Both methods end at the same place: a rendered `mp4`, a caption `vtt`
+file, a thumbnail, and a YouTube upload with the same metadata
+conventions. Steps 1 through 8 below cover Method One. Steps 9 through
+16 cover Method Two. Step 17, the YouTube publishing walkthrough,
+applies to whichever video is being uploaded.
+
+![Microphone, ring light, notebook, and coffee: the script and
+narration notes for either method are drafted with the same low-tech
+tools as everything else in this pipeline.](media/images/ambiance-prep.png){.img-fluid}
 
 # What Is OBS Studio?
 
@@ -160,8 +215,17 @@ either directly by the AV team or via a downstream tool that wraps it.
   with the R session one intends to record.
 - **Disk space.** Roughly 50 megabytes per minute of recorded video at
   the recommended quality settings.
+- **Additional tools for Method Two.** `ffmpeg`, `sox`, ImageMagick, and
+  OpenAI Whisper (installed below in Step 9). A slide editor is also
+  needed; this post uses LibreOffice Impress because it is free,
+  scriptable, and exports directly to PNG.
 
 # Step by Step
+
+## Method One: Live Capture with OBS Studio
+
+Steps 1 through 8 set up and use OBS Studio for a real-time, on-camera
+recording of an R session.
 
 ## Step 1: Install OBS Studio
 
@@ -237,7 +301,8 @@ different device. Common issues caught at this stage include muted
 microphone input, font sizes too small to read at video compression,
 and a busy desktop background visible behind a window-captured editor.
 
-![Mid-recording: the editor on the left, a small webcam tile in the corner.](media/images/obs.png){.img-fluid}
+![Audio interface mid-recording, levels lit, a scene panel glowing
+out of focus behind it: the moment a take is actually rolling.](media/images/ambiance-recording.png){.img-fluid}
 
 ## Step 6: The Five-Minute Analysis
 
@@ -283,7 +348,7 @@ fit <- lm(body_mass_g ~ flipper_length_mm,
 summary(fit)
 ```
 
-A flipper length increase of one millimetre is associated with roughly
+A flipper length increase of one millimeter is associated with roughly
 a 50 gram increase in body mass. R-squared is approximately 0.76,
 which is striking for a single predictor and provides a natural
 cliffhanger for a follow-up post that introduces species as a covariate
@@ -308,7 +373,7 @@ fields:
 - **Description.** Link to the blog post and to the GitHub repository.
 - **Tags.** `r`, `data analysis`, `screencast`, plus dataset tags.
 - **Chapters.** Add timestamp markers in the description so viewers
-  can jump to the modelling section.
+  can jump to the modeling section.
 
 ## Step 8: Embed in the Blog Post
 
@@ -332,6 +397,326 @@ introduction, so visitors can choose to watch or read.
 
 Bind these in *Settings > Hotkeys* before the first real recording.
 Unbound defaults catch most beginners off guard.
+
+## Method Two: A Narrated Slide Deck, Assembled from the Command Line
+
+Steps 9 through 16 build a second, produced version of the same
+Palmer Penguins result: an eight-slide, narrated video assembled
+entirely with command-line tools rather than a screen recorder. The
+pipeline below is adapted from the one used to produce the
+[Palmer Penguins Part 1](../pp-eda/) video, generalized so it applies
+to any short R result.
+
+## Step 9: Install the Method Two Toolchain
+
+```bash
+# macOS
+brew install ffmpeg sox imagemagick poppler
+pip install --upgrade openai-whisper
+
+# Debian or Ubuntu
+sudo apt install ffmpeg sox imagemagick poppler-utils
+pip install --upgrade openai-whisper
+```
+
+Verification:
+
+```bash
+ffmpeg -version | head -n 1
+sox --version
+convert --version | head -n 1
+whisper --help > /dev/null && echo "whisper OK"
+```
+
+Whisper's first run downloads a model file (the `base` model used
+below is about 140 megabytes); do this once, before a recording
+session, rather than mid-production.
+
+## Step 10: Write the Script
+
+A slide deck is scripted before it is built, unlike a live take, which
+is improvised against an outline. Five minutes of narration is roughly
+650 to 750 words at a comfortable speaking pace (130 to 150 words per
+minute). Split the script into one paragraph per slide so each
+paragraph becomes one narration take:
+
+1. **Title.** State the question: does flipper length predict body
+   mass in the Palmer Penguins?
+2. **Data.** Introduce the 333-observation, three-species dataset and
+   its provenance (Palmer Station, Antarctica; Dr. Kristen Gorman).
+3. **Visual relationship.** Describe the scatter plot before the model
+   is fit, so the viewer is oriented to expect a positive, roughly
+   linear trend.
+4. **Model.** Fit `lm(body_mass_g ~ flipper_length_mm)` and state the
+   coefficient and R-squared in plain language.
+5. **Interpretation.** One millimeter of flipper length corresponds to
+   roughly 50 grams of body mass; R-squared near 0.76 is strong for a
+   single predictor.
+6. **Limitation.** Note the residual clustering by species as a
+   cliffhanger for a multiple-regression follow-up.
+7. **Takeaway.** One sentence restating the finding.
+8. **Close.** Point to the written post and the code repository.
+
+Keep each paragraph to 60 to 90 words. A paragraph that runs long
+either splits into two slides or gets cut; do not solve pacing
+problems by talking faster during recording.
+
+## Step 11: Export Slide Assets from R
+
+Render the plot and the model summary as static assets the slide
+deck will embed. This runs as a standalone script, separate from the
+report itself, so the file paths below assume a working directory of
+`video_production/` alongside `slides/` and `audio/` subdirectories:
+
+```r
+library(palmerpenguins)
+library(ggplot2)
+library(dplyr)
+
+penguins_clean <- penguins |> tidyr::drop_na()
+
+p_flipper_mass <- ggplot(
+  penguins_clean,
+  aes(x = flipper_length_mm, y = body_mass_g)
+) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    title = "Body mass scales linearly with flipper length"
+  ) +
+  theme_minimal(base_size = 20)
+
+ggsave(
+  "slides/assets/flipper_mass_scatter.png",
+  p_flipper_mass,
+  width = 10, height = 5.6, dpi = 200
+)
+
+fit <- lm(body_mass_g ~ flipper_length_mm, data = penguins_clean)
+capture.output(summary(fit), file = "slides/assets/model_summary.txt")
+```
+
+Use `base_size = 20` or larger for any plot bound for a slide; text
+sized for a printed figure reads as illegible once compressed into a
+1920x1080 video frame.
+
+## Step 12: Build the Slide Deck
+
+Build the eight slides in LibreOffice Impress (File > New >
+Presentation, 16:9), one slide per script paragraph from Step 10.
+Import `flipper_mass_scatter.png` on the visual-relationship slide and
+render `model_summary.txt` as a monospace text box on the model slide.
+Keep body text under 40 words per slide; the narration carries the
+explanation, and a slide crowded with text competes with the narrator
+for the viewer's attention. Export the finished deck as PNG, one file
+per slide:
+
+```
+File > Export As > Export as Images... > slides/exported/slide-01.png
+```
+
+For a build that needs to be reproducible or repeated across many
+posts, generate the deck programmatically instead of by hand, using
+the `odfpy` Python package to write slide XML directly (title, image
+frame, and text box per slide) and script the PNG export step with
+`soffice --headless --convert-to png`. This trades a one-time scripting
+cost for the ability to regenerate every slide from source data
+without reopening Impress.
+
+## Step 13: Record Narration Per Slide
+
+Record each script paragraph as a separate WAV file in Audacity
+(*Tracks > Add New > Mono Track*, then *File > Export > Export
+Audio*), saved as `audio/slide-01_raw.wav` through
+`audio/slide-08_raw.wav`. Recording one slide at a time, rather than
+the whole script in one take, means a flubbed line only costs a
+re-record of that slide, not the whole narration. Read at a
+conversational pace with a half-second pause at the start and end of
+each take; the pause gives the fade filters in Step 14 something to
+work with.
+
+## Step 14: Process Audio with `sox`
+
+Normalize level, reduce room noise, and add short fades on every
+slide's narration:
+
+```bash
+cd audio
+
+for f in slide-*_raw.wav; do
+  base="${f%_raw.wav}"
+  sox "$f" -n trim 0 0.3 noiseprof "${base}_noise.prof"
+  sox "$f" "${base}_clean.wav" noisered "${base}_noise.prof" 0.21
+  sox "${base}_clean.wav" "${base}_final.wav" gain -n -1 fade t 0.3 0 0.3
+done
+```
+
+`noiseprof` samples the first 0.3 seconds of each take as a noise
+fingerprint, which is why the half-second pause from Step 13 matters:
+without silence at the start, `noiseprof` fingerprints speech instead
+of room noise and the `noisered` pass distorts the voice.
+
+## Step 15: Assemble the Video with `ffmpeg`
+
+Build a silent slideshow, an assembled narration track, and combine
+them, all from the `video_production/` directory:
+
+```bash
+# 1. List each slide image with its narration's duration.
+for f in audio/slide-*_final.wav; do
+  ffprobe -v error -show_entries format=duration \
+    -of default=noprint_wrappers=1:nokey=1 "$f"
+done
+# Use these durations to build slides.txt:
+cat > slides.txt << 'EOF'
+file 'slides/exported/slide-01.png'
+duration 8
+file 'slides/exported/slide-02.png'
+duration 12
+file 'slides/exported/slide-03.png'
+duration 14
+file 'slides/exported/slide-04.png'
+duration 16
+file 'slides/exported/slide-05.png'
+duration 14
+file 'slides/exported/slide-06.png'
+duration 10
+file 'slides/exported/slide-07.png'
+duration 8
+file 'slides/exported/slide-08.png'
+duration 8
+EOF
+
+# 2. Render the slideshow (no audio yet).
+ffmpeg -f concat -i slides.txt \
+  -vf "scale=1920:1080,format=yuv420p" \
+  -c:v libx264 -r 30 slides_only.mp4
+
+# 3. Concatenate the eight narration files into one track.
+ls -1 audio/slide-*_final.wav | sort | sed "s/^/file '/;s/$/'/" \
+  > audio/audio_list.txt
+ffmpeg -f concat -safe 0 -i audio/audio_list.txt \
+  -c:a pcm_s16le audio/narration.wav
+
+# 4. Merge video and narration, then add a one-second fade at each end.
+ffmpeg -i slides_only.mp4 -i audio/narration.wav \
+  -c:v libx264 -c:a aac -b:a 192k \
+  -map 0:v:0 -map 1:a:0 video_draft.mp4
+
+DURATION=$(ffprobe -v error -show_entries format=duration \
+  -of default=noprint_wrappers=1:nokey=1 video_draft.mp4 | cut -d. -f1)
+FADE_OUT=$((DURATION - 1))
+
+ffmpeg -i video_draft.mp4 \
+  -vf "fade=t=in:st=0:d=1,fade=t=out:st=${FADE_OUT}:d=1" \
+  -af "afade=t=in:st=0:d=0.5,afade=t=out:st=${FADE_OUT}.5:d=0.5" \
+  -c:v libx264 -c:a aac \
+  Palmer_Penguins_Slides_Final.mp4
+```
+
+The per-slide `duration` values in `slides.txt` must match (or
+slightly exceed) each slide's narration length from step 1, or the
+image will change before the sentence describing it finishes.
+
+## Step 16: Generate Captions and a Thumbnail
+
+Whisper transcribes the finished narration track directly into a
+`.vtt` caption file:
+
+```bash
+whisper Palmer_Penguins_Slides_Final.mp4 \
+  --model base --output_format vtt --output_dir .
+```
+
+Read the generated captions once before uploading. Whisper's `base`
+model is fast but occasionally mis-hears domain vocabulary (it
+transcribed 'flipper length' as 'flipper lengths' in one early test
+here); statistical terms and dataset names are worth a manual pass.
+
+Build a 1280x720 thumbnail from the title slide:
+
+```bash
+convert slides/exported/slide-01.png -resize 1280x720^ \
+  -gravity center -extent 1280x720 \
+  thumbnail.png
+```
+
+## Step 17: Publish to YouTube, Step by Step
+
+This step applies to either method's finished `mp4`. Neither the OBS
+export nor the `ffmpeg` build in Step 15 uploads automatically; the
+YouTube Data API supports scripted uploads, but this pipeline
+deliberately keeps a human in the loop for the title, description, and
+thumbnail, all of which benefit from a final look before they go
+public.
+
+1. **Sign in to YouTube Studio** at `studio.youtube.com` with the
+   channel's account.
+2. **Start the upload.** Click *Create* (top right) then *Upload
+   videos*, and select `clipped.mp4` (Method One, from Step 7) or
+   `Palmer_Penguins_Slides_Final.mp4` (Method Two, from Step 15).
+3. **Fill in Details.**
+   - **Title.** `Palmer Penguins: Does Flipper Length Predict Body
+     Mass? (R Analysis)`
+   - **Description.** Lead with the question, list a few timestamp
+     chapters, and close with links to the written post and code
+     repository:
+     ```
+     Does flipper length predict body mass in the Palmer Penguins?
+     A five-minute R walkthrough: load, visualize, fit, interpret.
+
+     0:00 The question
+     0:20 The data (333 penguins, 3 species)
+     1:10 Visualizing the relationship
+     2:20 Fitting the model
+     3:30 Interpreting the coefficient and R-squared
+     4:20 What the model misses (species clustering)
+     4:50 Takeaway
+
+     Written post: [blog link]
+     Code: [GitHub link]
+     Dataset: palmerpenguins R package
+
+     #RStats #DataScience #Regression
+     ```
+   - **Thumbnail.** Upload `thumbnail.png` from Step 16 (Method Two)
+     or a still frame exported from the OBS recording (Method One):
+     `ffmpeg -i clipped.mp4 -ss 00:00:05 -frames:v 1 thumbnail.png`.
+   - **Playlist.** Add to the channel's R analysis playlist, if one
+     exists, so the video surfaces alongside related content.
+   - **Audience.** Mark 'not made for kids' unless the channel is
+     specifically educational content for children.
+4. **Video elements.** Skip end screens and cards for a first upload;
+   both require existing videos or subscriber thresholds this pipeline
+   does not depend on.
+5. **Checks.** YouTube runs an automated copyright check. For a
+   Palmer Penguins walkthrough this reliably passes; a video with
+   licensed background music (see the polish notes in Step 6 of the
+   live-capture method) may take longer.
+6. **Captions.** Under *Subtitles*, upload the `.vtt` file: from
+   Whisper (Method Two, Step 16) or generated the same way from the
+   OBS export's audio track (Method One). Do not rely on YouTube's
+   automatic captions alone; they are usually worse than a Whisper
+   pass corrected by hand.
+7. **Visibility.** Publish as *Unlisted* first. Watch the unlisted
+   link back on a phone and a laptop, at typical viewing volume, to
+   catch audio and caption sync issues before anyone else sees it.
+8. **Go public.** Once the unlisted check is clean, change visibility
+   to *Public* (or *Scheduled*, if coordinating with the blog post's
+   publish date) and copy the resulting URL into the blog post's video
+   embed from Step 8.
+
+## Comparing the Two Methods
+
+| Property                | Method One (live capture) | Method Two (slide deck)      |
+|--------------------------|---------------------------|-------------------------------|
+| Setup time               | Lower (OBS install only)  | Higher (full toolchain)       |
+| Production time (5 min video) | 30-60 minutes         | 4-5 hours                      |
+| Fixing one bad sentence  | Re-record the whole take  | Re-record one slide's audio    |
+| Best for                 | Live coding, debugging, teaching process | Finished results, polished explainers |
+| Editing control           | Minimal (cut points only) | Full (per-slide timing, captions, thumbnail) |
 
 # Things to Watch Out For
 
@@ -377,6 +762,22 @@ the symptom and the fix.
    megabytes. Confirm at least 5 gigabytes of free space before a
    long session, or switch to a more aggressive `crf` value
    (lower visual quality, smaller file).
+8. **`sox noisered` makes the narration sound underwater.** Symptom:
+   after Step 14, speech has a metallic or muffled quality. Fix: the
+   noise-reduction strength (`0.21` in the commands above) is too
+   aggressive for the room. Lower it in steps of 0.05 and re-run;
+   values below 0.15 usually leave audible hiss but preserve natural
+   voice quality, which is the better trade for narration.
+9. **The `ffmpeg concat` demuxer silently drops slides.** Symptom:
+   `slides_only.mp4` plays fewer than eight slides. Fix: the `file`
+   paths in `slides.txt` are relative to the working directory `ffmpeg`
+   is run from, not to the script's location; run the command from
+   inside `video_production/`, or use absolute paths.
+10. **Whisper mistranscribes statistical terms.** Symptom: 'R-squared'
+    becomes 'are squared', dataset or package names come out garbled.
+    Fix: there is no flag that fixes this reliably; budget time to
+    read the `.vtt` file once against the script from Step 10 and
+    hand-correct domain vocabulary before uploading.
 
 # Uninstall / Rollback
 
@@ -399,15 +800,21 @@ rm -rf ~/.config/obs-studio
 Both removals are reversible: a fresh install re-creates the
 configuration directory with default settings on first launch.
 
-![A finished recording, ready to clip and upload.](media/images/obs.png){.img-fluid}
+![Headphones on the printed script, coffee half finished: the
+recording or the build script has finished, and only the edit and
+upload remain.](media/images/ambiance-wrap.png){.img-fluid}
 
 # What Did We Learn?
 
 ## Conceptual
 
-- A short screencast is a different teaching artefact from a written
+- A short screencast is a different teaching artifact from a written
   post; both have a place, and pairing them produces a richer
   resource than either alone.
+- Live capture and a produced slide deck are not competing solutions
+  to the same problem; they serve different content. Choosing between
+  them is a decision about what the video needs to show, not a matter
+  of which tool is 'better'.
 - The capture pipeline (recorder, encoder, hosting) can be assembled
   entirely from open source and free-tier components, with no
   long-term lock-in.
@@ -422,6 +829,13 @@ configuration directory with default settings on first launch.
   protects against crashes without sacrificing platform compatibility.
 - Audio quality matters more than video quality. Viewers tolerate
   720p video far better than echo-prone or compressed audio.
+- Recording narration one slide at a time turns a single point of
+  failure (the whole five-minute take) into eight independent, cheap
+  retries. This is the main structural advantage of Method Two over
+  Method One.
+- `sox noiseprof` needs true silence to fingerprint; a half-second
+  pause at the start of every narration take is not a stylistic
+  choice, it is a dependency of Step 14.
 
 ## Gotchas
 
@@ -431,21 +845,31 @@ configuration directory with default settings on first launch.
 - YouTube's MP4 preference is documented but not enforced clearly in
   upload error messages.
 - Default OBS hotkeys are intentionally unset to avoid clashes; this
-  feels broken until one realises it.
+  feels broken until one realizes it.
+- Whisper transcription quality is good enough to save time but not
+  good enough to skip review; domain vocabulary needs a human pass
+  every time.
 
 # Limitations
 
-- The pipeline does not include a post-production editor. For
-  multi-cut tutorials or any work requiring callouts, a separate
-  editor (Kdenlive, DaVinci Resolve, iMovie) is needed.
+- Method Two does not include a full nonlinear video editor. For
+  multi-cut tutorials, B-roll, or callouts beyond what `ffmpeg` filter
+  chains can express, a timeline editor (Kdenlive, DaVinci Resolve,
+  iMovie) is still the better tool; the command-line pipeline in this
+  post is fixed-timeline slide assembly, not general video editing.
 - The Palmer Penguins worked example is a demonstration, not a
-  template for clinical trial visualisation. Audio narration would
+  template for clinical trial visualization. Audio narration would
   need different framing for sensitive data.
 - Live streaming via YouTube introduces 5 to 30 seconds of latency,
   which makes interactive Q&A clunky compared with a dedicated video
   conferencing tool.
-- The post does not address closed captioning or multilingual
-  subtitles, both of which deserve their own treatment.
+- Whisper captions need manual correction for statistical and package
+  vocabulary; this post does not provide a scripted fix, only a
+  review step.
+- Neither method's YouTube publishing step is scripted end to end;
+  the YouTube Data API supports automated uploads, but this pipeline
+  keeps a human review of title, description, and thumbnail before
+  publish, by design.
 
 # Opportunities for Improvement
 
@@ -457,45 +881,61 @@ configuration directory with default settings on first launch.
    programmatically.
 3. Compare hardware encoder quality across Apple VT, NVENC, and
    QuickSync at matched bitrates.
-4. Produce a follow-up post on Kdenlive for non-trivial editing.
-5. Document a captioning workflow with `whisper.cpp` for
-   automatically generated subtitles.
-6. Build a CI job that validates the scene collection JSON against
-   the OBS schema on each commit.
+4. Package Steps 9 through 16 as a single `build_video.sh` script,
+   parameterized by a script file and a slide-asset directory, so a
+   new Method Two video needs no manual command editing.
+5. Replace the manual LibreOffice slide-building step in Step 12 with
+   a scripted deck generator (`odfpy`), so slide content can be
+   regenerated automatically whenever the underlying analysis changes.
+6. Evaluate `whisper.cpp` as a faster, dependency-lighter alternative
+   to the Python `openai-whisper` package used in Step 16.
+7. Build a CI job that validates the scene collection JSON (Method
+   One) and the `slides.txt` duration list (Method Two) before a
+   recording session begins.
 
 # Wrapping Up
 
-OBS Studio, paired with YouTube and a small set of recording
-conventions, gives R users a complete open source pipeline for live
-coding content. The investment in initial setup is modest and pays
-off across many subsequent recordings: the same scenes, audio chain,
-and upload conventions apply to every post.
+OBS Studio and a command-line slide-assembly pipeline, paired with
+YouTube and a shared publishing checklist, give R users two complete,
+open source paths to video content. Neither replaces the other. The
+investment in initial setup is modest for both, and pays off across
+many subsequent recordings: the same scenes and audio chain apply to
+every live take, and the same `sox`/`ffmpeg`/Whisper build applies to
+every slide deck.
 
-The next step in this series will be a recording of the Palmer
-Penguins analysis above, published both as a written post and as an
-embedded five-minute video, so the comparison between the two media
-can be made directly.
+The next step in this series is to record both versions of the Palmer
+Penguins analysis above (a live OBS take and a produced slide deck),
+publish them alongside the written post, and compare viewer response
+between the two formats directly.
 
 In conclusion, three points merit emphasis. First,
-the open source pipeline (OBS + ffmpeg + YouTube) is
-sufficient for publication-quality screencasts of R
-analyses, with no proprietary tooling required.
-Second, three scenes, two audio sources, and a
-30-second test constitute the minimum viable
-configuration; everything beyond that is refinement.
-Third, audio quality and font size are the two
-settings most often underestimated by first-time
-recorders, and correcting them before recording saves
-significant post-production effort.
+the open source pipeline (OBS or ffmpeg, plus YouTube)
+is sufficient for publication-quality video of R
+analyses, with no proprietary tooling required, whether
+the content calls for a live take or a produced deck.
+Second, the choice between live capture and a slide deck
+is a decision about the content, not a preference; a
+debugging session belongs on camera live, a finished
+result belongs in an edited deck.
+Third, audio quality, font or text size, and a manual
+caption review are the details most often underestimated
+by first-time producers in either method, and correcting
+them before recording or uploading saves significant
+post-production effort.
 
 # See Also
 
 - [OBS Studio documentation](https://obsproject.com/wiki/)
 - [YouTube Creator Academy](https://creatoracademy.youtube.com/)
-- [Palmer Penguins Part 1](../pp-eda/) — the worked
-  analysis used in this post's screencast example.
+- [Palmer Penguins Part 1](../pp-eda/) — the worked analysis used in
+  both this post's live-capture and slide-deck examples, and the
+  source of the produced-video conventions Method Two generalizes.
 - [ffmpeg documentation](https://ffmpeg.org/documentation.html) for
-  trimming and remuxing recordings.
+  trimming, remuxing, and the concat demuxer used in Steps 7 and 15.
+- [SoX documentation](https://sourceforge.net/p/sox/code/ci/master/tree/sox.txt)
+  for the noise-reduction and fade effects used in Step 14.
+- [OpenAI Whisper](https://github.com/openai/whisper) for the caption
+  generation used in Step 16.
 - [Quarto video shortcode reference](https://quarto.org/docs/authoring/videos.html)
 
 # Reproducibility
@@ -503,7 +943,11 @@ significant post-production effort.
 | Component       | Version tested  | Notes                                |
 |-----------------|-----------------|--------------------------------------|
 | OBS Studio      | 30.x            | macOS via Homebrew; Ubuntu via apt   |
-| ffmpeg          | 7.x             | for trim and remux                   |
+| ffmpeg          | 7.x             | for trim, remux, and slide assembly  |
+| sox             | 14.4.x          | audio normalization and noise reduction |
+| ImageMagick     | 7.x             | thumbnail generation                 |
+| openai-whisper  | 20231117        | `base` model, caption generation     |
+| LibreOffice     | 24.x            | slide deck authoring and PNG export  |
 | Quarto          | 1.9.37          | for HTML rendering of this post      |
 | macOS           | 26.4 (Tahoe)    | hardware encoding via Apple VT       |
 | Ubuntu          | 24.04 LTS       | hardware encoding via NVENC          |
@@ -527,8 +971,8 @@ I would enjoy hearing from you if:
 
 ---
 
-*Rendered on 2026-05-02 at 10:30 PDT.*<br>
-*Source: ~/prj/rgtlab/posts/pub-obs-r-screencasts/index.qmd*
+*Rendered on 2026-08-28 at 12:20 PDT.*<br>
+*Source: ~/prj/ryyblog/posts/pub-obs-r-screencasts/index.qmd*
 
 <!-- ============================================================================
 PRE-PUBLISH QA CHECKLIST: verify each item BEFORE setting draft: false
@@ -539,7 +983,7 @@ top of this file. If anything below is unchecked, the post is not ready.
 [ ] YAML
     [x] title, subtitle, date, categories, description, image filled in
     [x] document-type: 'blog'
-    [x] draft: false
+    [ ] draft: false — still true; blocked on the items below
 
 [ ] Narrative complete (no remaining `[bracketed]` placeholders)
     [x] grep '\[' index.qmd returns only legitimate code/links
@@ -547,24 +991,40 @@ top of this file. If anything below is unchecked, the post is not ready.
 [ ] Configuration artifacts present and tested
     [ ] Full config file shown verbatim, not snippets
         (OBS scene-collection JSON not yet captured under analysis/configs/)
-    [ ] Install commands tested on a clean machine (or VM)
+    [ ] Method One install commands tested on a clean machine (or VM)
+    [ ] Method Two toolchain (Step 9) installed and Steps 10-16 run
+        end to end on a clean machine; commands are currently adapted
+        from the pp-eda video-production guide and inspected, not
+        independently re-verified under this post's own execution
     [ ] Verification commands produce the documented output
-    [x] Uninstall / rollback steps documented
+    [x] Uninstall / rollback steps documented (Method One only; Method
+        Two has no persistent install beyond the CLI packages)
 
 [ ] Things to Watch Out For
-    [x] At least 5 gotchas listed (7 provided)
+    [x] At least 5 gotchas listed (10 provided: 7 Method One, 3 Method Two)
     [x] Each gotcha has both a symptom AND a fix
 
 [ ] Visual design
     [x] 1 hero image (width=80%) immediately after AUTHOR PROVIDES block
-    [ ] Exactly 3 ambiance images ({.img-fluid} only, no width=NN%,
+        (fixed 2026-08-28: replaced hero.png/hero.jpg, whose blank
+        laptop screen did not match the caption, with a new Gemini-
+        generated image showing a lit code-editor screen)
+    [x] Exactly 3 ambiance images ({.img-fluid} only, no width=NN%,
         no fig-align): after Objectives, after Configuration, before
         Lessons Learnt
-        (currently obs.png used as placeholder for all three)
-    [ ] Hero and ambiance captions describe the actual image (not a
-        placeholder description)
+        (fixed 2026-08-28: obs.png was mislabeled — it is the
+        data.table hex-sticker logo, not OBS. First swapped for the
+        generic shared ambiance1/2/3.png coffee-and-notebook stock
+        photos, then replaced again the same day with three
+        Gemini-generated, topic-specific images: ambiance-prep.png,
+        ambiance-recording.png, ambiance-wrap.png)
+    [x] Hero and ambiance captions describe the actual image content,
+        not a metaphorical stand-in
+    [ ] A slide-deck screenshot or exported slide PNG illustrating
+        Method Two (Step 12) would strengthen the visual walkthrough;
+        not yet added
     [x] No hand-coded "Download PDF" link in body
-    [ ] media/images/README.md attributes every image
+    [x] media/images/README.md attributes every image
 
 [ ] Content quality
     [x] Learner voice: author positioned as peer, not expert
@@ -577,9 +1037,12 @@ top of this file. If anything below is unchecked, the post is not ready.
     [x] Version matrix table filled in (OS, tool, dependencies, date)
     [ ] Config files committed under analysis/configs/
     [ ] Install script (if provided) is runnable on a clean machine
+    [ ] `build_video.sh` (Opportunity #4) written and tested, replacing
+        the individually-run Method Two commands
 
 [ ] Render verification
-    [x] quarto render index.qmd produces clean HTML with no warnings
+    [ ] quarto render index.qmd produces clean HTML with no warnings
+        (not re-rendered since Method Two was added)
     [x] Hero image displays in /blog/ listing card
     [ ] Internal links resolve
 
@@ -593,7 +1056,8 @@ Recommended reading order:
 1. [Multi-Language Quarto Documents on macOS](../pub-multi-language-quarto/)
 2. [Rapid Conversion of Draft R Scripts to Formal Rmd](../pub-r-script-to-rmd/)
 3. [Building a Statistical Computing Textbook](../pub-statistical-computing-textbook/)
-4. **Setting up OBS for Live R Coding Screencasts** (this post)
+4. **Producing R Coding Videos: OBS Screencasts and Narrated Slide
+   Decks** (this post)
 5. [Hosting a Quarto Book Series on Netlify](../pub-hosting-quarto-books-netlify/)
 6. [A Review and Proposal for Policy Regarding Generative AI Use in Graduate Biostatistics Courses](../pub-ai-course-policy-survey/)
 
