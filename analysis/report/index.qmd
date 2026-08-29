@@ -6,7 +6,7 @@ categories: [setup, obs, youtube, screencast, video-production, ffmpeg, whisper,
 description: "A reproducible, hands-on pipeline for producing R data analysis videos two ways: live OBS Studio screencasts and edited, narrated slide decks assembled with sox, ffmpeg, and Whisper. Includes installation, a worked five-minute Palmer Penguins example for each method, and a full YouTube publishing walkthrough."
 image: "media/images/hero-generated.png"
 document-type: "blog"
-draft: true
+draft: false
 execute:
   echo: true
   warning: false
