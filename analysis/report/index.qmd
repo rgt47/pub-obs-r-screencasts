@@ -108,18 +108,20 @@ mid-thought, and read aloud the output of `summary(fit)`. That brief exposure
 to the analyst's working memory taught me more about the analysis than the
 paper had.
 
-What I discovered, after a few false starts with proprietary tools, was that
-the open source community already had a complete capture pipeline waiting:
-OBS Studio for recording, YouTube for distribution, and a small set of
-recording conventions to glue them together. The pipeline costs nothing,
+I tried a few proprietary tools first, without much luck. What I
+eventually discovered was that the open source community already had
+a complete capture pipeline waiting: OBS Studio for recording, YouTube
+for distribution, and a small set of recording conventions to glue
+them together. The pipeline costs nothing,
 runs on macOS, Linux, and Windows, and produces files that any future
 viewer can play without an account.
 
 We walk through that pipeline end to end. The post covers OBS
 installation, scene and audio configuration suitable for an R coding
-session, a publication checklist for YouTube, and a worked five-minute
-example using the Palmer Penguins dataset that mirrors the analytical
-structure of [Palmer Penguins Part 1](../pp-eda/).
+session, and a publication checklist for YouTube. It closes with a
+worked five-minute example using the Palmer Penguins dataset that
+mirrors the analytical structure of
+[Palmer Penguins Part 1](../pp-eda/).
 
 ## Motivations
 
@@ -197,9 +199,10 @@ recording and live streaming application released under the GNU General
 Public License version 2. It plays the same role for video that
 `ffmpeg` plays for command-line transcoding: a deeply scriptable, deeply
 configurable workhorse that the rest of the open source ecosystem builds
-on. A concrete example: every academic conference I have attended in the
-past two years that recorded talks for asynchronous viewing used OBS,
-either directly by the AV team or via a downstream tool that wraps it.
+on. Here is a concrete example. Every academic conference I have
+attended in the past two years that recorded talks for asynchronous
+viewing used OBS, either directly by the AV team or via a downstream
+tool that wraps it.
 
 # Prerequisites
 
@@ -518,9 +521,9 @@ File > Export As > Export as Images... > slides/exported/slide-01.png
 ```
 
 For a build that needs to be reproducible or repeated across many
-posts, generate the deck programmatically instead of by hand, using
-the `odfpy` Python package to write slide XML directly (title, image
-frame, and text box per slide) and script the PNG export step with
+posts, generate the deck programmatically instead of by hand. Use the
+`odfpy` Python package to write slide XML directly (title, image
+frame, and text box per slide), then script the PNG export step with
 `soffice --headless --convert-to png`. This trades a one-time scripting
 cost for the ability to regenerate every slide from source data
 without reopening Impress.
@@ -554,9 +557,9 @@ done
 ```
 
 `noiseprof` samples the first 0.3 seconds of each take as a noise
-fingerprint, which is why the half-second pause from Step 13 matters:
+fingerprint. This is why the half-second pause from Step 13 matters:
 without silence at the start, `noiseprof` fingerprints speech instead
-of room noise and the `noisered` pass distorts the voice.
+of room noise, and the `noisered` pass distorts the voice.
 
 ## Step 15: Assemble the Video with `ffmpeg`
 
@@ -646,7 +649,7 @@ convert slides/exported/slide-01.png -resize 1280x720^ \
 ## Step 17: Publish to YouTube, Step by Step
 
 This step applies to either method's finished `mp4`. Neither the OBS
-export nor the `ffmpeg` build in Step 15 uploads automatically; the
+export nor the `ffmpeg` build in Step 15 uploads automatically. The
 YouTube Data API supports scripted uploads, but this pipeline
 deliberately keeps a human in the loop for the title, description, and
 thumbnail, all of which benefit from a final look before they go
@@ -904,9 +907,9 @@ every live take, and the same `sox`/`ffmpeg`/Whisper build applies to
 every slide deck.
 
 The next step in this series is to record both versions of the Palmer
-Penguins analysis above (a live OBS take and a produced slide deck),
-publish them alongside the written post, and compare viewer response
-between the two formats directly.
+Penguins analysis above, a live OBS take and a produced slide deck,
+and publish them alongside the written post. We will then compare
+viewer response between the two formats directly.
 
 In conclusion, three points merit emphasis. First,
 the open source pipeline (OBS or ffmpeg, plus YouTube)
