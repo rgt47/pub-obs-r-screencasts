@@ -100,8 +100,8 @@ HERO IMAGE
 
 # Introduction
 
-I did not appreciate how much a good screencast teaches until a colleague sent
-me a five-minute video of an analysis I had read about in a paper a week
+A good screencast teaches more than a paper does. A colleague sent me a
+five-minute video of an analysis I had read about in a paper a week
 earlier. The paper had described the model, the data, and the result. The
 screencast showed the analyst pause over a missing value, change a plot scale
 mid-thought, and read aloud the output of `summary(fit)`. That brief exposure
